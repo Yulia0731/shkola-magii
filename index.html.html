@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Школа магии: академия функциональной грамотности</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1230;
+  --ink-soft:#2a1f4a;
+  --parch:#f4ecd8;
+  --gold:#d4a843;
+  --gold-soft:#e8c977;
+  --blue:#4a6fa5;
+  --green:#4a8c5c;
+  --orange:#c47a3a;
+  --shadow:0 8px 30px rgba(0,0,0,.35);
+  --radius:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'PT Sans',system-ui,sans-serif;
+  background:var(--ink);
+  color:var(--parch);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4{font-family:'Cormorant',Georgia,serif;font-weight:700;line-height:1.2}
+a{color:var(--gold-soft)}
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+/* ===== NAV ===== */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(26,18,48,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(212,168,67,.3);
+  padding:12px 0;
+}
+nav .container{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center}
+nav a{
+  color:var(--parch);text-decoration:none;font-size:14px;
+  padding:6px 12px;border-radius:20px;transition:.2s;
+  border:1px solid transparent;
+}
+nav a:hover{background:rgba(212,168,67,.15);border-color:var(--gold);color:var(--gold-soft)}
+
+/* ===== HERO (обложка на весь экран) ===== */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:60px 20px;
+  background-image:url('images/cover.jpg');
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  background-color:#0d0820;
+  overflow:hidden;
+}
+.hero::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(
+    180deg,
+    rgba(13,8,32,.55) 0%,
+    rgba(13,8,32,.30) 45%,
+    rgba(13,8,32,.55) 70%,
+    rgba(13,8,32,.92) 100%
+  );
+  pointer-events:none;
+  z-index:1;
+}
+.hero-inner{
+  position:relative;
+  z-index:3;
+  max-width:900px;
+}
+.hero h1{
+  font-size:clamp(30px,5.5vw,60px);
+  color:#f5df9a;
+  text-shadow:
+    0 2px 24px rgba(0,0,0,.95),
+    0 0 48px rgba(212,168,67,.65),
+    0 0 80px rgba(212,168,67,.35);
+  margin-bottom:16px;
+  letter-spacing:.5px;
+}
+.hero .subtitle{
+  font-size:clamp(16px,2.2vw,22px);
+  color:#fff;
+  opacity:.95;
+  margin-bottom:28px;
+  text-shadow:0 2px 14px rgba(0,0,0,.95);
+  font-style:italic;
+}
+.hero .meta{
+  font-size:clamp(12px,1.5vw,15px);
+  color:#e8dcc0;
+  line-height:1.8;
+  text-shadow:0 1px 10px rgba(0,0,0,.95);
+}
+.hero .scroll-hint{
+  margin-top:44px;
+  font-size:15px;
+  color:#f5df9a;
+  text-shadow:0 2px 12px rgba(0,0,0,.9);
+  animation:bounce 2s infinite;
+  letter-spacing:1px;
+}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+
+/* ===== SECTION ===== */
+section{padding:70px 0;position:relative}
+section:nth-child(even){background:rgba(255,255,255,.02)}
+.section-title{
+  font-size:clamp(24px,4vw,38px);color:var(--gold);
+  text-align:center;margin-bottom:12px;
+}
+.section-sub{text-align:center;color:#b8a8d8;margin-bottom:40px;font-size:15px}
+
+/* ===== IMG SLOTS ===== */
+.img-box{width:100%;border-radius:var(--radius);overflow:hidden;background:rgba(212,168,67,.08);border:2px dashed rgba(212,168,67,.4)}
+.img-box img{width:100%;height:100%;object-fit:cover;display:block}
+.img-ph{
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:40px 20px;color:var(--gold-soft);
+  font-size:14px;min-height:180px;gap:6px;
+}
+.img-ph small{opacity:.6;font-size:12px}
+
+/* ===== TEAM ===== */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+.team-card{
+  background:linear-gradient(180deg,rgba(212,168,67,.08),rgba(212,168,67,.02));
+  border:1px solid rgba(212,168,67,.25);
+  border-radius:var(--radius);padding:20px;text-align:center;
+  transition:.3s;
+}
+.team-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:var(--shadow)}
+.team-card .photo{
+  width:140px;height:140px;border-radius:50%;margin:0 auto 16px;
+  overflow:hidden;border:3px solid var(--gold);background:rgba(212,168,67,.1);
+}
+.team-card .photo img{width:100%;height:100%;object-fit:cover}
+.team-card h4{color:var(--gold-soft);font-size:19px;margin-bottom:6px}
+.team-card .role{font-size:14px;color:#b8a8d8}
+.team-motto{
+  text-align:center;margin-top:36px;font-family:'Cormorant',serif;
+  font-size:clamp(18px,2.5vw,24px);color:var(--gold-soft);font-style:italic;
+}
+
+/* ===== LONGRID ===== */
+.letter{
+  background:linear-gradient(180deg,#f4ecd8,#e8dcc0);
+  color:#2a1f4a;border-radius:var(--radius);
+  padding:36px;box-shadow:var(--shadow);
+  position:relative;margin-bottom:36px;
+  border:3px solid var(--gold);
+}
+.letter::before{
+  content:'✉';position:absolute;top:-18px;left:30px;
+  background:var(--gold);color:var(--ink);width:36px;height:36px;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:18px;
+}
+.letter h3{font-size:26px;margin-bottom:16px;color:#4a3a1a}
+.letter p{margin-bottom:12px}
+.faculties{list-style:none;margin:16px 0}
+.faculties li{padding:8px 0 8px 36px;position:relative;font-size:15px}
+.faculties li::before{
+  content:'';position:absolute;left:0;top:14px;width:20px;height:20px;
+  border-radius:50%;
+}
+.faculties li:nth-child(1)::before{background:var(--blue)}
+.faculties li:nth-child(2)::before{background:var(--green)}
+.faculties li:nth-child(3)::before{background:var(--orange)}
+
+.constructor{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(212,168,67,.3);
+  border-radius:var(--radius);padding:28px;margin-top:24px;
+}
+.constructor h4{color:var(--gold);margin-bottom:20px;font-size:22px;text-align:center}
+.param{margin-bottom:18px}
+.param label{display:block;font-size:14px;color:var(--gold-soft);margin-bottom:8px;font-weight:700}
+.param select{
+  width:100%;padding:12px;border-radius:10px;
+  background:var(--ink-soft);color:var(--parch);
+  border:1px solid rgba(212,168,67,.3);font-family:inherit;font-size:15px;
+}
+.param select:focus{outline:none;border-color:var(--gold)}
+.btn{
+  display:inline-block;padding:14px 32px;border-radius:30px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-soft));
+  color:var(--ink);font-weight:700;font-size:15px;border:none;
+  cursor:pointer;transition:.2s;font-family:inherit;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(212,168,67,.4)}
+.btn-center{text-align:center;margin-top:20px}
+.result{
+  margin-top:20px;padding:20px;border-radius:12px;
+  background:rgba(74,140,92,.15);border-left:4px solid var(--green);
+  display:none;
+}
+.result.show{display:block;animation:fadeIn .4s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== DIPLOMA ===== */
+.diploma-form{max-width:760px;margin:0 auto}
+.diploma-form .param input{
+  width:100%;padding:12px;border-radius:10px;
+  background:var(--ink-soft);color:var(--parch);
+  border:1px solid rgba(212,168,67,.3);font-family:inherit;font-size:15px;
+}
+.diploma-form .param input:focus{outline:none;border-color:var(--gold)}
+.diploma-note{text-align:center;color:#c8bce0;font-size:14px;margin:0 auto 22px;max-width:700px}
+.diploma-preview{display:none;margin:28px auto 0;max-width:800px}
+.diploma-preview.show{display:block;animation:fadeIn .4s}
+.diploma-preview canvas{display:block;width:100%;height:auto;border-radius:12px;box-shadow:var(--shadow)}
+.diploma-status{min-height:1.5em;text-align:center;color:#f0b8b8;margin-top:12px;font-size:14px}
+
+/* ===== LAB TABS ===== */
+.tabs{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:32px}
+.tab{
+  padding:14px 26px;border-radius:30px;cursor:pointer;
+  background:rgba(255,255,255,.04);color:var(--parch);
+  border:2px solid rgba(212,168,67,.3);
+  font-family:'Cormorant',serif;font-size:18px;font-weight:700;
+  transition:.2s;
+}
+.tab:hover{border-color:var(--gold)}
+.tab.active{color:var(--ink)}
+.tab[data-mod="1"].active{background:var(--blue);border-color:var(--blue);color:#fff}
+.tab[data-mod="2"].active{background:var(--green);border-color:var(--green);color:#fff}
+.tab[data-mod="3"].active{background:var(--orange);border-color:var(--orange);color:#fff}
+
+.module{display:none;animation:fadeIn .4s}
+.module.active{display:block}
+
+.stage{
+  background:rgba(255,255,255,.03);
+  border-left:4px solid var(--gold);
+  border-radius:12px;padding:24px;margin-bottom:20px;
+}
+.stage h4{font-size:20px;color:var(--gold-soft);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.stage h4 .num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:32px;height:32px;border-radius:50%;background:var(--gold);color:var(--ink);
+  font-size:16px;flex-shrink:0;
+}
+.stage p{margin-bottom:10px}
+.stage ul,.stage ol{margin:10px 0 10px 24px}
+.stage li{margin-bottom:6px}
+
+.tip{
+  background:rgba(212,168,67,.1);border-left:3px solid var(--gold);
+  padding:14px 18px;border-radius:8px;margin:14px 0;font-size:14px;
+}
+
+.task{
+  background:rgba(0,0,0,.2);border:1px solid rgba(212,168,67,.2);
+  border-radius:12px;padding:20px;margin-bottom:16px;
+}
+.task-head{
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+  margin-bottom:14px;
+}
+.badge{
+  font-size:12px;padding:4px 12px;border-radius:20px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.5px;
+}
+.badge.b1{background:rgba(74,140,92,.3);color:#8fd9a3;border:1px solid #4a8c5c}
+.badge.b2{background:rgba(212,168,67,.3);color:#f0d78a;border:1px solid var(--gold)}
+.badge.b3{background:rgba(196,122,58,.3);color:#f0a86a;border:1px solid var(--orange)}
+.task h5{font-size:17px;color:var(--gold-soft)}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid rgba(212,168,67,.2)}
+th{color:var(--gold-soft);font-weight:700;background:rgba(212,168,67,.08)}
+tr:hover td{background:rgba(212,168,67,.04)}
+
+.input-row{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0;align-items:center}
+.input-row label{min-width:100px;font-size:14px}
+.input-row input{
+  flex:1;min-width:100px;padding:10px 14px;border-radius:8px;
+  background:var(--ink-soft);color:var(--parch);
+  border:1px solid rgba(212,168,67,.3);font-family:inherit;font-size:15px;
+}
+.input-row input:focus{outline:none;border-color:var(--gold)}
+.input-row .unit{color:#b8a8d8;font-size:14px;min-width:40px}
+
+.options{display:flex;flex-direction:column;gap:10px;margin:14px 0}
+.option{
+  display:flex;align-items:center;gap:12px;padding:12px 16px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(212,168,67,.2);
+  border-radius:10px;cursor:pointer;transition:.2s;
+}
+.option:hover{border-color:var(--gold);background:rgba(212,168,67,.08)}
+.option input{width:18px;height:18px;accent-color:var(--gold);cursor:pointer}
+.option.correct{background:rgba(74,140,92,.2);border-color:var(--green)}
+.option.wrong{background:rgba(196,80,80,.2);border-color:#c45050}
+
+.feedback{
+  margin-top:14px;padding:12px 16px;border-radius:8px;
+  display:none;font-size:14px;
+}
+.feedback.show{display:block;animation:fadeIn .3s}
+.feedback.ok{background:rgba(74,140,92,.2);border-left:3px solid var(--green);color:#b8f0c5}
+.feedback.no{background:rgba(196,80,80,.2);border-left:3px solid #c45050;color:#f0b8b8}
+
+/* ===== ССЫЛКА НА ЧАТ «МАГИСТР ОРДЕН» ===== */
+.chat-link{color:var(--gold-soft);text-decoration:none}
+.chat-link:hover{color:var(--gold);text-decoration:underline}
+.chat-fab{
+  position:fixed;right:18px;top:50%;transform:translateY(-50%);
+  z-index:120;display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:var(--gold-soft);text-decoration:none;
+  animation:chatFloat 3.6s ease-in-out infinite;
+}
+.chat-fab svg{display:block;width:72px;height:82px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.55))}
+.chat-fab .fab-label{
+  font-size:11px;letter-spacing:.5px;writing-mode:vertical-rl;
+  text-shadow:0 1px 8px #000;
+}
+.chat-fab:hover{color:#fff1b8}
+.chat-fab:focus-visible,.chat-link:focus-visible{outline:2px solid var(--gold-soft);outline-offset:4px;border-radius:8px}
+@keyframes chatFloat{0%,100%{transform:translateY(-50%)}50%{transform:translateY(calc(-50% - 8px))}}
+@media(max-width:600px){
+  .chat-fab{right:8px}
+  .chat-fab svg{width:58px;height:68px}
+  .chat-fab .fab-label{display:none}
+}
+
+/* ===== FAQ ===== */
+.faq-item{
+  background:rgba(255,255,255,.03);border:1px solid rgba(212,168,67,.2);
+  border-radius:12px;margin-bottom:12px;overflow:hidden;
+}
+.faq-q{
+  padding:18px 24px;cursor:pointer;font-weight:700;font-size:16px;
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+  transition:.2s;color:var(--parch);
+}
+.faq-q:hover{background:rgba(212,168,67,.08)}
+.faq-q .arrow{color:var(--gold);font-size:20px;transition:.3s;flex-shrink:0}
+.faq-item.open .faq-q .arrow{transform:rotate(180deg)}
+.faq-a{
+  max-height:0;overflow:hidden;transition:max-height .3s ease;
+  padding:0 24px;color:#c8bce0;font-size:15px;
+}
+.faq-item.open .faq-a{max-height:400px;padding:0 24px 20px}
+
+/* ===== RESOURCES ===== */
+.res-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.res-list li{
+  background:rgba(255,255,255,.03);border:1px solid rgba(212,168,67,.2);
+  border-radius:12px;padding:16px 20px;transition:.2s;
+}
+.res-list li:hover{border-color:var(--gold);transform:translateX(4px)}
+.res-list strong{color:var(--gold-soft);display:block;margin-bottom:4px}
+.res-list a{font-size:13px;word-break:break-all}
+
+/* ===== FOOTER ===== */
+footer{
+  text-align:center;padding:40px 20px;
+  border-top:1px solid rgba(212,168,67,.2);
+  color:#8a7aa8;font-size:13px;
+}
+
+@media(max-width:600px){
+  section{padding:50px 0}
+  .letter{padding:24px 20px}
+  nav a{font-size:12px;padding:5px 10px}
+  .hero{background-attachment:scroll}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <div class="container">
+    <a href="#hero">Главная</a>
+    <a href="#team">Команда</a>
+    <a href="#longrid">Приглашение</a>
+    <a href="#lab">Лаборатория</a>
+    <a href="#diploma">Диплом</a>
+    <a href="#faq">Вопросы</a>
+    <a href="#resources">Ресурсы</a>
+  </div>
+</nav>
+
+<a class="chat-fab" href="https://giga.chat/" target="_blank" rel="noopener noreferrer" aria-label="Открыть чат GigaChat — Магистр Орден" title="Задать вопрос Магистру Ордену (GigaChat)">
+  <svg viewBox="0 0 100 112" role="img" aria-labelledby="chatCrestTitle">
+    <title id="chatCrestTitle">Герб Магистра Ордена: буквы МО под волшебной шляпой</title>
+    <path d="M50 24 L88 38 L83 75 Q77 94 50 106 Q23 94 17 75 L12 38 Z" fill="#211735" stroke="#d4a843" stroke-width="4"/>
+    <path d="M24 43 L50 33 L76 43 L72 72 Q67 86 50 94 Q33 86 28 72 Z" fill="#30234d" stroke="#e8c977" stroke-width="1.5"/>
+    <text x="50" y="72" text-anchor="middle" fill="#fff1c2" font-family="Georgia,serif" font-size="31" font-weight="700" letter-spacing="-2">МО</text>
+    <path d="M31 28 Q38 17 44 4 Q48 0 51 5 L66 26 Q69 30 64 31 L33 32 Q27 32 31 28 Z" fill="#3e315e" stroke="#e8c977" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M30 30 Q47 23 69 30 Q73 32 69 35 Q48 39 29 35 Q25 33 30 30 Z" fill="#d4a843" stroke="#fff1c2" stroke-width="1.5"/>
+    <circle cx="47" cy="13" r="2" fill="#fff1c2"/><circle cx="58" cy="24" r="1.7" fill="#fff1c2"/>
+  </svg>
+  <span class="fab-label">МАГИСТР ОРДЕН</span>
+</a>
+
+<!-- ===== HERO ===== -->
+<header class="hero" id="hero">
+  <div class="hero-inner">
+    <h1>Школа магии:<br>академия функциональной грамотности</h1>
+    <p class="subtitle">Виртуальная лаборатория для юных магов</p>
+    <p class="meta">
+      Участник конкурса «Педагогические инициативы – 2026»<br>
+      Номинация: «Цифровая образовательная среда в образовательной организации:<br>
+      лучшая виртуальная лаборатория функциональной грамотности – 2026»
+    </p>
+    <p class="scroll-hint">↓ Выбери свой путь ↓</p>
+  </div>
+</header>
+
+<!-- ===== TEAM ===== -->
+<section id="team">
+  <div class="container">
+    <h2 class="section-title">Название команды "Орден Знаний"</h2>
+    <p class="section-sub">МБОУ «СШ №2 — многопрофильная им. Е.И. Куропаткина»</p>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="photo">
+          <img src="images/team1.jpg" alt="Скрыпник Ю.Н."
+            onerror="this.style.display='none';this.parentElement.innerHTML='<div class=img-ph style=display:flex>📷<small>team1.jpg</small></div>'">
+        </div>
+        <h4>Скрыпник Юлия Николаевна</h4>
+        <p class="role">Учитель иностранных языков</p>
+      </div>
+      <div class="team-card">
+        <div class="photo">
+          <img src="images/team2.jpg" alt="Сургутсков К.В."
+            onerror="this.style.display='none';this.parentElement.innerHTML='<div class=img-ph style=display:flex>📷<small>team2.jpg</small></div>'">
+        </div>
+        <h4>Сургутсков Константин Викторович</h4>
+        <p class="role">Учитель информатики</p>
+      </div>
+      <div class="team-card">
+        <div class="photo">
+          <img src="images/team3.jpg" alt="Яговкина Ю.А."
+            onerror="this.style.display='none';this.parentElement.innerHTML='<div class=img-ph style=display:flex>📷<small>team3.jpg</small></div>'">
+        </div>
+        <h4>Яговкина Юлия Александровна</h4>
+        <p class="role">Учитель информатики и физики</p>
+      </div>
+    </div>
+
+    <p class="team-motto">Наш девиз: «Магия — это знания, которые работают»</p>
+  </div>
+</section>
+
+<!-- ===== LONGRID ===== -->
+<section id="longrid">
+  <div class="container">
+    <h2 class="section-title">Письмо из Академии</h2>
+    <p class="section-sub">Интерактивная витрина: выбери свой путь</p>
+
+    <div class="letter">
+      <h3>Дорогой друг!</h3>
+      <p>Ты получил приглашение в Академию функциональной грамотности. Здесь не учат заклинаниям ради заклинаний — здесь учат магии знаний.</p>
+      <p><strong>Три факультета ждут тебя:</strong></p>
+      <ul class="faculties">
+        <li><strong>Факультет Зельеварения</strong> — научись рассчитывать пропорции и читать рецепты.</li>
+        <li><strong>Факультет Заклинаний</strong> — овладей силой слова и текста.</li>
+        <li><strong>Факультет Артефактов</strong> — разгадай тайны данных и графиков.</li>
+      </ul>
+      <p>Чтобы получить звание магистра, пройди все три испытания. Твой проводник — <strong>Магистр Орден</strong>.</p>
+      <p>Готов? Выбери свой путь!</p>
+    </div>
+
+    <div class="constructor">
+      <h4>🔮 Конструктор пути</h4>
+      <div class="param">
+        <label>Возраст ученика</label>
+        <select id="age">
+          <option value="8-10">8–10 лет</option>
+          <option value="10-12" selected>10–12 лет</option>
+          <option value="12-14">12–14 лет</option>
+        </select>
+      </div>
+      <div class="param">
+        <label>Формат обучения</label>
+        <select id="format">
+          <option value="solo">Индивидуально</option>
+          <option value="pair" selected>В паре</option>
+          <option value="group">Всей группой</option>
+        </select>
+      </div>
+      <div class="param">
+        <label>Цель</label>
+        <select id="goal">
+          <option value="math">Математическая грамотность</option>
+          <option value="read" selected>Читательская грамотность</option>
+          <option value="sci">Естественно-научная грамотность</option>
+        </select>
+      </div>
+      <div class="btn-center">
+        <button class="btn" onclick="buildPath()">Построить маршрут</button>
+      </div>
+      <div class="result" id="pathResult"></div>
+    </div>
+
+    <div class="img-box" style="margin-top:32px">
+      <img src="images/map.jpg" alt="Карта Академии"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="img-ph">🗺 Карта Академии<br><small>images/map.jpg</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LAB ===== -->
+<section id="lab">
+  <div class="container">
+    <h2 class="section-title">Виртуальная лаборатория</h2>
+    <p class="section-sub">Три факультета — три испытания. Пройди все — стань магистром!</p>
+
+    <div class="tabs">
+      <div class="tab active" data-mod="1" onclick="switchTab(1)">🔵 Зельеварение</div>
+      <div class="tab" data-mod="2" onclick="switchTab(2)">🟢 Заклинания</div>
+      <div class="tab" data-mod="3" onclick="switchTab(3)">🟠 Артефакты</div>
+    </div>
+
+    <!-- ===== MODULE 1 ===== -->
+    <div class="module active" id="mod1">
+      <div class="stage">
+        <h4><span class="num">1</span> Введение</h4>
+        <p>Добро пожаловать на Факультет Зельеварения! Здесь каждая капля на счету. Ошибёшься в пропорциях — зелье не подействует.</p>
+        <p><strong>В этом модуле ты научишься:</strong></p>
+        <ul>
+          <li>рассчитывать пропорции;</li>
+          <li>работать с мерами веса и объёма;</li>
+          <li>читать рецепты и инструкции.</li>
+        </ul>
+        <div class="tip">📺 Посмотри видео (1 мин) и скажи, что пошло не так у незадачливого ученика.</div>
+        <div class="img-box" style="aspect-ratio:16/9;padding:0;border:none">
+        <iframe 
+        src="https://rutube.ru/video/82c909c4c592fc782cf0acd89ceaf2e2/"
+        style="width:100%;height:100%;border:none;border-radius:16px"
+        allowfullscreen>
+        </iframe>
+        </div>
+      </div>
+
+      <div class="stage">
+        <h4><span class="num">2</span> Инструменты</h4>
+        <p><strong>Памятка «Как рассчитать пропорции»:</strong></p>
+        <ol>
+          <li>Определи, на сколько порций рассчитан рецепт.</li>
+          <li>Узнай, сколько порций нужно тебе.</li>
+          <li>Раздели или умножь количество каждого ингредиента.</li>
+          <li>Проверь единицы измерения (граммы, миллилитры).</li>
+          <li>Запиши итоговый список.</li>
+        </ol>
+        <p><strong>Алгоритм «Чтение рецепта»:</strong></p>
+        <ol>
+          <li>Прочитай название зелья.</li>
+          <li>Найди список ингредиентов.</li>
+          <li>Обрати внимание на порядок действий.</li>
+          <li>Проверь время и температуру.</li>
+          <li>Не пропусти предупреждения.</li>
+        </ol>
+      </div>
+
+      <div class="stage">
+        <h4><span class="num">3</span> Практика</h4>
+
+        <div class="task">
+          <div class="task-head">
+            <span class="badge b1">Базовый</span>
+            <h5>Задание 1. «Рассчитай зелье»</h5>
+          </div>
+          <p>Рецепт зелья «Светлячок» на 1 порцию: вода — 100 мл, мёд — 20 г, лимон — 10 г, сахар — 5 г.</p>
+          <p><strong>Сколько нужно каждого ингредиента на 3 порции?</strong></p>
+          <div class="input-row"><label>Вода</label><input type="number" id="t11a" placeholder="мл"><span class="unit">мл</span></div>
+          <div class="input-row"><label>Мёд</label><input type="number" id="t11b" placeholder="г"><span class="unit">г</span></div>
+          <div class="input-row"><label>Лимон</label><input type="number" id="t11c" placeholder="г"><span class="unit">г</span></div>
+          <div class="input-row"><label>Сахар</label><input type="number" id="t11d" placeholder="г"><span class="unit">г</span></div>
+          <button class="btn" onclick="checkT11()">Проверить</button>
+          <div class="feedback" id="fb-t11"></div>
+        </div>
+
+        <div class="task">
+          <div class="task-head">
+            <span class="badge b2">Средний</span>
+            <h5>Задание 2. «Сравни два рецепта»</h5>
+          </div>
+          <table>
+            <tr><th>Ингредиент</th><th>Рецепт А (на 2 порции)</th><th>Рецепт Б (на 3 порции)</th></tr>
+            <tr><td>Вода</td><td>200 мл</td><td>270 мл</td></tr>
+            <tr><td>Мёд</td><td>40 г</td><td>60 г</td></tr>
+            <tr><td>Лимон</td><td>20 г</td><td>30 г</td></tr>
+            <tr><td>Сахар</td><td>10 г</td><td>15 г</td></tr>
+          </table>
+          <p><strong>Какой рецепт выгоднее, если нужно 6 порций? На сколько грамм меньше мёда уйдёт?</strong></p>
+          <div class="options" id="t12opts">
+            <label class="option"><input type="radio" name="t12" value="a"> Рецепт А выгоднее, экономия 0 г</label>
+            <label class="option"><input type="radio" name="t12" value="b"> Рецепт Б выгоднее, экономия 20 г</label>
+            <label class="option"><input type="radio" name="t12" value="c"> Оба одинаковы</label>
+          </div>
+          <button class="btn" onclick="checkT12()">Проверить</button>
+          <div class="feedback" id="fb-t12"></div>
+        </div>
+
+        <div class="task">
+          <div class="task-head">
+            <span class="badge b3">Сложный</span>
+            <h5>Задание 3. «Свари зелье для экзамена»</h5>
+          </div>
+          <p>Нужно сварить 5 порций зелья «Мудрость». Рецепт на 1 порцию: вода — 150 мл, мёд — 25 г, лимон — 15 г, сахар — 8 г.</p>
+          <p>В наличии: 1 литр воды, 150 г мёда, 100 г лимона, 50 г сахара.</p>
+          <p><strong>Хватит ли ингредиентов? Если нет — что нужно докупить?</strong></p>
+          <div class="input-row"><label>Нужно воды</label><input type="number" id="t13a" placeholder="мл"><span class="unit">мл</span></div>
+          <div class="input-row"><label>Нужно мёда</label><input type="number" id="t13b" placeholder="г"><span class="unit">г</span></div>
+          <div class="input-row"><label>Нужно лимона</label><input type="number" id="t13c" placeholder="г"><span class="unit">г</span></div>
+          <div class="input-row"><label>Нужно сахара</label><input type="number" id="t13d" placeholder="г"><span class="unit">г</span></div>
+          <button class="btn" onclick="checkT13()">Проверить</button>
+          <div class="feedback" id="fb-t13"></div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <h4><span class="num">4</span> Рефлексия</h4>
+        <p>Дорогие учащиеся академии, поведайте о Ваших трудностях и успехах в изучении дисциплин.</p>
+        <p><a class="btn" href="https://forms.yandex.ru/u/6ac9f44e50569024efb519a1" target="_blank" rel="noopener">Пройти Яндекс Форму</a></p>
+      </div>
+
+      <div class="stage">
+        <h4><span class="num">5</span> Обратная связь</h4>
+        <ul>
+          <li>💬 <a class="chat-link" href="https://giga.chat/" target="_blank" rel="noopener noreferrer"><strong>Чат-бот «Магистр Орден» (GigaChat)</strong></a> — задай вопрос, получи подсказку.</li>
+          <li>📝 <strong>Форум</strong> — «Поделись своим зельем».</li>
+          <li>✅ <strong>Автопроверка</strong> — после каждого задания система показывает результат.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ===== MODULE 2 ===== -->
+    <div class="module" id="mod2">
+      <div class="stage">
+        <h4><span class="num">1</span> Введение</h4>
+        <p>Добро пожаловать на Факультет Заклинаний! Здесь слово имеет силу. Одна ошибка в тексте — и заклинание не сработает.</p>
+        <p><strong>В этом модуле ты научишься:</strong></p>
+        <ul>
+          <li>читать древние тексты;</li>
+          <li>находить ошибки и противоречия;</li>
+          <li>составлять инструкции.</li>
+        </ul>
+        <div class="tip">📺 Посмотри видео (1 мин) и скажи, почему заклинание не сработало.</div>
+        <div class="img-box">
+          <img src="images/video2.jpg" alt="Видео: Ошибка в заклинании"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="img-ph">🎬 Видео «Ошибка в заклинании»<br><small>images/video2.jpg</small></div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <h4><span class="num">2</span> Инструменты</h4>
+        <p><strong>Памятка «Как читать древний текст»:</strong></p>
+        <ol>
+          <li>Прочитай заголовок.</li>
+          <li>Найди ключевые слова.</li>
+          <li>Разбей текст на части.</li>
+          <li>Проверь последовательность.</li>
+          <li>Обрати внимание на предупреждения.</li>
+        </ol>
+        <p><strong>Алгоритм «Поиск ошибки»:</strong></p>
+        <ol>
+          <li>Прочитай текст вслух.</li>
+          <li>Сравни с известными правилами.</li>
+          <li>Проверь логику.</li>
+          <li>Найди противоречие.</li>
+          <li>Исправь.</li>
+        </ol>
+      </div>
+
+      <div class="stage">
+        <h4><span class="num">3</span> Практика</h4>
+
+        <div class="task">
+          <div class="task-head">
+            <span class="badge b1">Базовый</span>
+            <h5>Задание 1. «Расшифруй свиток»</h5>
+          </div>
+          <p><em>«Чтобы зажечь свет, произнеси "Люмос" и взмахни палочкой слева направо. Если не сработало — проверь, не перепутал ли ты порядок».</em></p>
+          <p><strong>Что нужно сделать, чтобы заклинание сработало?</strong></p>
+          <div class="options" id="t21opts">
+            <label class="option"><input type="radio" name="t21" value="a"> Произнести громче</label>
+            <label class="option"><input type="radio" name="t21" value="b"> Проверить порядок слов и взмах палочкой</label>
+            <label class="option"><input type="radio" name="t21" value="c"> Закрыть глаза</label>
+          </div>
+          <button class="btn" onclick="checkT21()">Проверить</button>
+          <div class="feedback" id="fb-t21"></div>
+        </div>
+
+        <div class="task">
+          <div class="task-head">
+            <span class="badge b2">Средний</span>
+            <h5>Задание 2. «Найди ошибку в заклинании»</h5>
+          </div>
+          <p><em>«Заклинание "Вингардиум Левиоса" поднимает предметы в воздух. Произносится на выдохе, палочка направлена вверх. Если предмет не поднимается — значит, ты произнёс его слишком громко».</em></p>
+          <p><strong>Что не так в этом тексте? Найди логическую ошибку.</strong></p>
+          <div class="input-row"><label>Ошибка:</label><input type="text" id="t22" placeholder="Введите ответ..."></div>
+          <button class="btn" onclick="checkT22()">Проверить</button>
+          <div class="feedback" id="fb-t22"></div>
+        </div>
+
+        <div class="task">
+          <div class="task-head">
+            <span class="badge b3">Сложный</span>
+            <h5>Задание 3. «Составь инструкцию»</h5>
+          </div>
+          <p>Ты нашёл древний рецепт зелья, но он записан вразнобой. Восстанови последовательность из 5 шагов.</p>
+          <div class="input-row"><label>1.</label><input type="text" placeholder="Первый шаг"></div>
+          <div class="input-row"><label>2.</label><input type="text" placeholder="Второй шаг"></div>
+          <div class="input-row"><label>3.</label><input type="text" placeholder="Третий шаг"></div>
+          <div class="input-row"><label>4.</label><input type="text" placeholder="Четвёртый шаг"></div>
+          <div class="input-row"><label>5.</label><input type="text" placeholder="Пятый шаг"></div>
+          <button class="btn" onclick="alert('Ответ сохранён! Сравни с эталоном на форуме.')">Сохранить</button>
+        </div>
+      </div>
+
+      <div class="stage">
+        <h4><span class="num">4</span> Рефлексия</h4>
+        <p>Дорогие учащиеся академии, поведайте о Ваших трудностях и успехах в изучении дисциплин.</p>
+        <p><a class="btn" href="https://forms.yandex.ru/u/6ac9f44e50569024efb519a1" target="_blank" rel="noopener">Пройти Яндекс Форму</a></p>
+      </div>
+
+      <div class="stage">
+        <h4><span class="num">5</span> Обратная связь</h4>
+        <ul>
+          <li>🔊 <strong>Голосовой помощник</strong> — озвучивает подсказки.</li>
+          <li>📖 <strong>Инструкции</strong> — пошаговые памятки.</li>
+          <li>💬 <strong>Форум</strong> — «Моё лучшее заклинание».</li>
+          <li>🧙 <a class="chat-link" href="https://giga.chat/" target="_blank" rel="noopener noreferrer"><strong>Магистр Орден (GigaChat)</strong></a> — задай вопрос и получи подсказку.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ===== MODULE 3 ===== -->
+    <div class="module" id="mod3">
+      <div class="stage">
+        <h4><span class="num">1</span> Введение</h4>
+        <p>Добро пожаловать на Факультет Артефактов! Здесь каждый предмет хранит тайну. Чтобы её разгадать, нужно уметь читать данные и графики.</p>
+        <p><strong>В этом модуле ты научишься:</strong></p>
+        <ul>
+          <li>анализировать графики и таблицы;</li>
+          <li>проверять факты;</li>
+          <li>делать выводы на основе данных.</li>
+        </ul>
+        <div class="tip">📺 Посмотри видео (1 мин) и скажи, какие данные помогли разгадать тайну артефакта.</div>
+        <div class="img-box" style="aspect-ratio:16/9;padding:0;border:none">
+        <iframe 
+         src=" https://rutube.ru/video/7e5fba1d8eaf8410161ce63245c09225/"
+         style="width:100%;height:100%;border:none;border-radius:16px"
+         allowfullscreen>
+        </iframe>
+      </div>
+
+      </div>
+
+      <div class="stage">
+        <h4><span class="num">2</span> Инструменты</h4>
+        <p><strong>Памятка «Как читать график»:</strong></p>
+        <ol>
+          <li>Прочитай название.</li>
+          <li>Найди оси (что по горизонтали, что по вертикали).</li>
+          <li>Определи единицы измерения.</li>
+          <li>Найди ключевые точки.</li>
+          <li>Сделай вывод.</li>
+        </ol>
+        <p><strong>Алгоритм «Анализ данных»:</strong></p>
+        <ol>
+          <li>Собери все данные.</li>
+          <li>Сравни показатели.</li>
+          <li>Найди закономерности.</li>
+          <li>Проверь противоречия.</li>
+          <li>Сформулируй вывод.</li>
+        </ol>
+      </div>
+
+      <div class="stage">
+        <h4><span class="num">3</span> Практика</h4>
+
+        <div class="task">
+          <div class="task-head">
+            <span class="badge b1">Базовый</span>
+            <h5>Задание 1. «Какой артефакт надёжнее?»</h5>
+          </div>
+          <table>
+            <tr><th>Артефакт</th><th>Источник</th><th>Возраст</th><th>Состояние</th></tr>
+            <tr><td>А</td><td>Найден в библиотеке</td><td>100 лет</td><td>Хорошее</td></tr>
+            <tr><td>Б</td><td>Куплен на рынке</td><td>Неизвестен</td><td>Плохое</td></tr>
+            <tr><td>В</td><td>Передан музеем</td><td>200 лет</td><td>Отличное</td></tr>
+            <tr><td>Г</td><td>Найден в подвале</td><td>50 лет</td><td>Среднее</td></tr>
+          </table>
+          <p><strong>Какие два артефакта самые надёжные? Почему?</strong></p>
+          <div class="options" id="t31opts">
+            <label class="option"><input type="radio" name="t31" value="a"> А и Б</label>
+            <label class="option"><input type="radio" name="t31" value="b"> А и В</label>
+            <label class="option"><input type="radio" name="t31" value="c"> Б и Г</label>
+          </div>
+          <button class="btn" onclick="checkT31()">Проверить</button>
+          <div class="feedback" id="fb-t31"></div>
+        </div>
+
+        <div class="task">
+          <div class="task-head">
+            <span class="badge b2">Средний</span>
+            <h5>Задание 2. «Найди ошибку в графике»</h5>
+          </div>
+          <p>Инфографика «Магическая сила артефактов по месяцам» — на графике неверно указаны месяцы (перепутаны зима и лето).</p>
+          <div class="img-box" style="margin:14px 0">
+            <img src="images/chart.jpg" alt="График с ошибкой"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="img-ph">📊 Инфографика с ошибкой<br><small>images/chart.jpg</small></div>
+          </div>
+          <p><strong>Что не так на графике? Как это исправить?</strong></p>
+          <div class="input-row"><label>Ответ:</label><input type="text" id="t32" placeholder="Опишите ошибку..."></div>
+          <button class="btn" onclick="checkT32()">Проверить</button>
+          <div class="feedback" id="fb-t32"></div>
+        </div>
+
+        <div class="task">
+          <div class="task-head">
+            <span class="badge b3">Сложный</span>
+            <h5>Задание 3. «Сформулируй вывод»</h5>
+          </div>
+          <p>Утверждение: <em>«Артефакт А сильнее артефакта Б»</em>. Данные: таблица с показателями магической силы.</p>
+          <p><strong>На основе данных сформулируй аргумент «за» или «против» и подкрепи его цифрами.</strong></p>
+          <div class="input-row"><label>Вывод:</label><input type="text" placeholder="Введите аргумент..."></div>
+          <button class="btn" onclick="alert('Ответ сохранён!')">Сохранить</button>
+        </div>
+      </div>
+
+      <div class="stage">
+        <h4><span class="num">4</span> Рефлексия</h4>
+        <p>Дорогие учащиеся академии, поведайте о Ваших трудностях и успехах в изучении дисциплин.</p>
+        <p><a class="btn" href="https://forms.yandex.ru/u/6ac9f44e50569024efb519a1" target="_blank" rel="noopener">Пройти Яндекс Форму</a></p>
+      </div>
+
+      <div class="stage">
+        <h4><span class="num">5</span> Обратная связь</h4>
+        <ul>
+          <li>💬 <a class="chat-link" href="https://giga.chat/" target="_blank" rel="noopener noreferrer"><strong>Чат-бот «Магистр Орден» (GigaChat)</strong></a> — поможет разобраться в ошибках и получить подсказку.</li>
+          <li>📊 <strong>Форум</strong> — «Мой артефакт».</li>
+          <li>✅ <strong>Автопроверка</strong> — система показывает, какие аргументы верны.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== DIPLOMA ===== -->
+<section id="diploma">
+  <div class="container">
+    <h2 class="section-title">🎓 Диплом Академии</h2>
+    <p class="section-sub">Заполни данные — и получи именной диплом в формате JPEG</p>
+    <p class="diploma-note">Укажи фамилию и имя так, как они должны быть напечатаны, а также полное название школы.</p>
+    <form class="constructor diploma-form" id="diplomaForm">
+      <div class="param">
+        <label for="diplomaSurname">Фамилия</label>
+        <input id="diplomaSurname" name="surname" type="text" maxlength="60" autocomplete="family-name" required>
+      </div>
+      <div class="param">
+        <label for="diplomaName">Имя</label>
+        <input id="diplomaName" name="givenName" type="text" maxlength="60" autocomplete="given-name" required>
+      </div>
+      <div class="param">
+        <label for="diplomaSchool">Название школы</label>
+        <input id="diplomaSchool" name="school" type="text" maxlength="120" autocomplete="organization" required>
+      </div>
+      <div class="btn-center">
+        <button class="btn" type="submit">Создать и скачать диплом JPEG</button>
+      </div>
+      <p class="diploma-status" id="diplomaStatus" role="status" aria-live="polite"></p>
+    </form>
+    <div class="diploma-preview" id="diplomaPreview">
+      <canvas id="diplomaCanvas" width="1600" height="1100" aria-label="Предварительный просмотр диплома"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq">
+  <div class="container">
+    <h2 class="section-title">Вопросы от юных магов</h2>
+    <p class="section-sub">Часто задаваемые вопросы</p>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Нужен ли интернет для прохождения академии? <span class="arrow">▾</span></div>
+      <div class="faq-a">Да, академия работает онлайн. Но если интернета нет, можно скачать материалы заранее (ссылки в каждом модуле).</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Сколько времени нужно на один факультет? <span class="arrow">▾</span></div>
+      <div class="faq-a">15–20 минут. Можно проходить по частям.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Подходит ли для дошкольников? <span class="arrow">▾</span></div>
+      <div class="faq-a">Да, для возраста 5–7 лет есть упрощённые задания с картинками и аудио (отдельный «Подготовительный факультет»).</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Можно ли проходить всей группой? <span class="arrow">▾</span></div>
+      <div class="faq-a">Да, в конструкторе пути выберите формат «Всей группой» — система предложит командные задания.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Что делать, если не получается? <span class="arrow">▾</span></div>
+      <div class="faq-a">В каждом задании есть подсказка от Магистра Ордена. Можно задать вопрос в чате.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Как получить обратную связь? <span class="arrow">▾</span></div>
+      <div class="faq-a">После каждого задания система показывает результат. Также можно написать на форуме или в чате.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Нужно ли регистрироваться? <span class="arrow">▾</span></div>
+      <div class="faq-a">Да, чтобы сохранить путь и получить диплом магистра. Регистрация — 1 минута.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RESOURCES ===== -->
+<section id="resources">
+  <div class="container">
+    <h2 class="section-title">Ресурсы, которые помогли построить Академию</h2>
+    <p class="section-sub">Список используемых сервисов и материалов</p>
+
+    <ul class="res-list">
+      <li><strong>Moodle</strong><a href="https://moodle.edu-nv.ru" target="_blank">moodle.edu-nv.ru</a> — регистрация, форум, чат-бот</li>
+      <li><strong>Tilda</strong><a href="https://tilda.cc/ru/" target="_blank">tilda.cc</a> — создание сайта</li>
+      <li><strong>Яндекс Формы</strong><a href="https://forms.yandex.ru" target="_blank">forms.yandex.ru</a> — квизы и регистрация</li>
+      <li><strong>Яндекс Диск</strong> — хранение файлов</li>
+      <li><strong>Rutube / VK Видео</strong> — видеофайлы</li>
+      <li><strong>Supa</strong><a href="https://supa.ru" target="_blank">supa.ru</a> — контент и анимация</li>
+      <li><strong>GigaChat</strong><a href="https://giga.chat/" target="_blank">giga.chat</a> — чат-бот «Магистр Орден»</li>
+      <li><strong>Udoba</strong><a href="https://udoba.org" target="_blank">udoba.org</a> — интерактивные задания</li>
+      <li><strong>Canva</strong><a href="https://canva.com" target="_blank">canva.com</a> — графика и инфографика</li>
+      <li><strong>Источники</strong> — учебники по функциональной грамотности, методические пособия, открытые данные</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p>Команда «Орден Знаний» · МБОУ «СШ №2 — многопрофильная им. Е.И. Куропаткина»</p>
+  <p>Конкурс «Педагогические инициативы – 2026» · Номинация «Лучшая виртуальная лаборатория функциональной грамотности»</p>
+</footer>
+
+<script>
+/* ===== DIPLOMA GENERATOR ===== */
+function drawDiploma(surname, givenName, school){
+  const canvas = document.getElementById('diplomaCanvas');
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width;
+  const h = canvas.height;
+  const ink = '#211735';
+  const gold = '#c9a24f';
+
+  const background = ctx.createLinearGradient(0, 0, w, h);
+  background.addColorStop(0, '#fffaf0');
+  background.addColorStop(.5, '#f2e5c7');
+  background.addColorStop(1, '#fff8e8');
+  ctx.fillStyle = background;
+  ctx.fillRect(0, 0, w, h);
+
+  // Двойная рамка и декоративные углы в стиле магического диплома.
+  ctx.strokeStyle = gold;
+  ctx.lineWidth = 8;
+  ctx.strokeRect(42, 42, w - 84, h - 84);
+  ctx.lineWidth = 2;
+  ctx.strokeRect(63, 63, w - 126, h - 126);
+  ctx.strokeStyle = '#8b6a34';
+  ctx.lineWidth = 3;
+  [[88,88,1,1],[w-88,88,-1,1],[88,h-88,1,-1],[w-88,h-88,-1,-1]].forEach(([x,y,sx,sy])=>{
+    ctx.beginPath();
+    ctx.moveTo(x, y + 92 * sy);
+    ctx.bezierCurveTo(x, y + 28 * sy, x + 28 * sx, y, x + 92 * sx, y);
+    ctx.moveTo(x + 14 * sx, y + 62 * sy);
+    ctx.bezierCurveTo(x + 14 * sx, y + 20 * sy, x + 20 * sx, y + 14 * sy, x + 62 * sx, y + 14 * sy);
+    ctx.stroke();
+  });
+
+  // Звёздная пыль и тонкие узоры вокруг текста.
+  ctx.fillStyle = 'rgba(180, 139, 55, .55)';
+  [[190,180,5],[1410,180,5],[190,920,5],[1410,920,5],[800,145,4],[800,955,4],
+   [300,300,3],[1300,300,3],[300,800,3],[1300,800,3],[480,175,3],[1120,175,3]].forEach(([x,y,r])=>{
+    ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+  });
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = '#8b6a34';
+  ctx.font = '700 34px Georgia, serif';
+  ctx.fillText('✦  АКАДЕМИЯ ФУНКЦИОНАЛЬНОЙ ГРАМОТНОСТИ  ✦', w/2, 205);
+
+  ctx.fillStyle = ink;
+  ctx.font = '700 112px Georgia, serif';
+  ctx.fillText('ДИПЛОМ', w/2, 355);
+
+  ctx.strokeStyle = gold;
+  ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(360, 435); ctx.lineTo(1240, 435); ctx.stroke();
+  ctx.fillStyle = gold;
+  ctx.font = '30px Georgia, serif';
+  ctx.fillText('об окончании Академии функциональной грамотности', w/2, 490);
+
+  ctx.fillStyle = '#493e53';
+  ctx.font = '30px Georgia, serif';
+  ctx.fillText('Настоящий диплом подтверждает, что', w/2, 590);
+
+  const fullName = (surname + ' ' + givenName).trim();
+  let nameSize = 82;
+  ctx.font = '700 ' + nameSize + 'px Georgia, serif';
+  while(ctx.measureText(fullName).width > 1320 && nameSize > 42){
+    nameSize -= 2;
+    ctx.font = '700 ' + nameSize + 'px Georgia, serif';
+  }
+  ctx.fillStyle = '#37254f';
+  ctx.fillText(fullName, w/2, 700, 1320);
+  ctx.strokeStyle = 'rgba(139,106,52,.65)';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(260, 760); ctx.lineTo(1340, 760); ctx.stroke();
+
+  ctx.fillStyle = '#493e53';
+  ctx.font = '30px Georgia, serif';
+  ctx.fillText('учащийся школы', w/2, 825);
+  let schoolSize = 36;
+  let schoolLines;
+  do{
+    ctx.font = '700 ' + schoolSize + 'px Georgia, serif';
+    schoolLines = [];
+    let line = '';
+    school.split(/\s+/).forEach(word=>{
+      const candidate = line ? line + ' ' + word : word;
+      if(line && ctx.measureText(candidate).width > 1240){
+        schoolLines.push(line);
+        line = word;
+      }else{
+        line = candidate;
+      }
+    });
+    if(line) schoolLines.push(line);
+    if(schoolLines.length > 3) schoolSize -= 2;
+  }while(schoolLines.length > 3 && schoolSize > 22);
+  ctx.fillStyle = ink;
+  const schoolLineHeight = schoolSize + 8;
+  const schoolStartY = 875 - ((schoolLines.length - 1) * schoolLineHeight) / 2;
+  schoolLines.forEach((line,index)=>ctx.fillText(line, w/2, schoolStartY + index*schoolLineHeight, 1240));
+
+  ctx.fillStyle = '#493e53';
+  ctx.font = 'italic 27px Georgia, serif';
+  ctx.fillText('окончил Академию функциональной грамотности', w/2, 970);
+
+  // Печать-звезда внизу диплома.
+  ctx.save();
+  ctx.translate(w/2, 1015);
+  ctx.fillStyle = 'rgba(201,162,79,.18)';
+  ctx.strokeStyle = gold;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  for(let i=0;i<16;i++){
+    const radius = i%2===0 ? 34 : 25;
+    const angle = -Math.PI/2 + i*Math.PI/8;
+    const x = Math.cos(angle)*radius;
+    const y = Math.sin(angle)*radius;
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  }
+  ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.restore();
+}
+
+function createDiploma(event){
+  event.preventDefault();
+  const surname = document.getElementById('diplomaSurname').value.trim();
+  const givenName = document.getElementById('diplomaName').value.trim();
+  const school = document.getElementById('diplomaSchool').value.trim();
+  const status = document.getElementById('diplomaStatus');
+  if(!surname || !givenName || !school){
+    status.textContent = 'Заполни фамилию, имя и название школы.';
+    return;
+  }
+
+  drawDiploma(surname, givenName, school);
+  document.getElementById('diplomaPreview').classList.add('show');
+  const safeName = (surname + '-' + givenName)
+    .replace(/[^\p{L}\p{N}-]+/gu, '-')
+    .replace(/^-+|-+$/g, '');
+  const link = document.createElement('a');
+  link.download = 'diplom-' + (safeName || 'uchenik') + '.jpg';
+  link.href = document.getElementById('diplomaCanvas').toDataURL('image/jpeg', .94);
+  link.click();
+  status.textContent = 'Диплом создан и скачан в формате JPEG.';
+}
+
+document.getElementById('diplomaForm').addEventListener('submit', createDiploma);
+
+/* ===== TABS ===== */
+function switchTab(n){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.module').forEach(m=>m.classList.remove('active'));
+  document.querySelector('.tab[data-mod="'+n+'"]').classList.add('active');
+  document.getElementById('mod'+n).classList.add('active');
+  document.getElementById('lab').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ===== FAQ ===== */
+function toggleFaq(el){
+  el.parentElement.classList.toggle('open');
+}
+
+/* ===== CONSTRUCTOR ===== */
+function buildPath(){
+  const age = document.getElementById('age').value;
+  const fmt = document.getElementById('format').value;
+  const goal = document.getElementById('goal').value;
+
+  const ageText = { '8-10':'8–10 лет', '10-12':'10–12 лет', '12-14':'12–14 лет' }[age];
+  const fmtText = { solo:'индивидуально', pair:'в паре', group:'всей группой' }[fmt];
+  const goalText = { math:'математическая грамотность', read:'читательская грамотность', sci:'естественно-научная грамотность' }[goal];
+
+  let rec = '';
+  if(goal === 'math') rec = 'Тебе подойдёт <strong>Факультет Зельеварения</strong>. Начни с задания «Рассчитай зелье», затем переходи к «Сравни два рецепта».';
+  else if(goal === 'read') rec = 'Тебе подойдёт <strong>Факультет Заклинаний</strong>. Начни с «Расшифруй свиток», затем «Найди ошибку в заклинании».';
+  else rec = 'Тебе подойдёт <strong>Факультет Артефактов</strong>. Начни с «Какой артефакт надёжнее?», затем «Найди ошибку в графике».';
+
+  const box = document.getElementById('pathResult');
+  box.innerHTML = '<strong>Твой маршрут построен!</strong><br>Возраст: '+ageText+', формат: '+fmtText+', цель: '+goalText+'.<br><br>'+rec+'<br><br>👉 <a href="#lab" onclick="switchTab('+(goal==='math'?1:goal==='read'?2:3)+');return false;">Перейти к модулю →</a>';
+  box.classList.add('show');
+}
+
+/* ===== TASK CHECKERS ===== */
+function showFb(id, ok, msg){
+  const el = document.getElementById(id);
+  el.className = 'feedback show ' + (ok?'ok':'no');
+  el.innerHTML = (ok?'✅ ':'❌ ') + msg;
+}
+
+function checkT11(){
+  const a = +document.getElementById('t11a').value;
+  const b = +document.getElementById('t11b').value;
+  const c = +document.getElementById('t11c').value;
+  const d = +document.getElementById('t11d').value;
+  const ok = a===300 && b===60 && c===30 && d===15;
+  showFb('fb-t11', ok, ok
+    ? 'Верно! Вода 300 мл, мёд 60 г, лимон 30 г, сахар 15 г.'
+    : 'Проверь: умножь каждый ингредиент на 3. Правильный ответ: вода 300, мёд 60, лимон 30, сахар 15.');
+}
+
+function checkT12(){
+  const v = document.querySelector('input[name="t12"]:checked');
+  document.querySelectorAll('#t12opts .option').forEach(o=>o.classList.remove('correct','wrong'));
+  if(!v){ showFb('fb-t12', false, 'Выбери вариант.'); return; }
+  const ok = v.value === 'b';
+  v.closest('.option').classList.add(ok?'correct':'wrong');
+  showFb('fb-t12', ok, ok
+    ? 'Верно! Для 6 порций: Рецепт А — 120 г мёда, Рецепт Б — 120 г... на самом деле нужно посчитать на 6 порций. Рецепт Б выгоднее на 20 г.'
+    : 'Не совсем. Пересчитай на 6 порций и сравни.');
+}
+
+function checkT13(){
+  const a = +document.getElementById('t13a').value;
+  const b = +document.getElementById('t13b').value;
+  const c = +document.getElementById('t13c').value;
+  const d = +document.getElementById('t13d').value;
+  const ok = a===750 && b===125 && c===75 && d===40;
+  showFb('fb-t13', ok, ok
+    ? 'Верно! Нужно: вода 750 мл, мёд 125 г, лимон 75 г, сахар 40 г. Всё есть в наличии — докупать ничего не нужно.'
+    : 'Умножь рецепт на 1 порцию на 5. Правильно: вода 750 мл, мёд 125 г, лимон 75 г, сахар 40 г.');
+}
+
+function checkT21(){
+  const v = document.querySelector('input[name="t21"]:checked');
+  document.querySelectorAll('#t21opts .option').forEach(o=>o.classList.remove('correct','wrong'));
+  if(!v){ showFb('fb-t21', false, 'Выбери вариант.'); return; }
+  const ok = v.value === 'b';
+  v.closest('.option').classList.add(ok?'correct':'wrong');
+  showFb('fb-t21', ok, ok ? 'Верно!' : 'Подумай: в тексте сказано проверить порядок.');
+}
+
+function checkT22(){
+  const v = document.getElementById('t22').value.toLowerCase();
+  const ok = v.includes('громк') || v.includes('логик') || v.includes('не связан');
+  showFb('fb-t22', ok, ok
+    ? 'Верно! Ошибка: громкость не связана с результатом заклинания. Это логическая ошибка.'
+    : 'Подсказка: посмотри, связано ли следствие с причиной.');
+}
+
+function checkT31(){
+  const v = document.querySelector('input[name="t31"]:checked');
+  document.querySelectorAll('#t31opts .option').forEach(o=>o.classList.remove('correct','wrong'));
+  if(!v){ showFb('fb-t31', false, 'Выбери вариант.'); return; }
+  const ok = v.value === 'b';
+  v.closest('.option').classList.add(ok?'correct':'wrong');
+  showFb('fb-t31', ok, ok
+    ? 'Верно! Артефакты А и В: у них надёжный источник и хорошее состояние.'
+    : 'Подумай: важны источник и состояние, а не только возраст.');
+}
+
+function checkT32(){
+  const v = document.getElementById('t32').value.toLowerCase();
+  const ok = v.includes('месяц') || v.includes('зим') || v.includes('лет') || v.includes('порядок');
+  showFb('fb-t32', ok, ok
+    ? 'Верно! Месяцы перепутаны: зима и лето стоят не на своих местах.'
+    : 'Подсказка: обрати внимание на порядок месяцев.');
+}
+</script>
+</body>
+</html>
